@@ -324,9 +324,26 @@ body.light-mode {
 
 .color-options {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     margin-bottom: 40px;
+}
+
+/* Responsive grid for different color counts */
+@media (min-width: 768px) {
+    .color-options[data-count="6"],
+    .color-options[data-count="12"],
+    .color-options[data-count="18"] {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .color-options[data-count="6"],
+    .color-options[data-count="12"],
+    .color-options[data-count="18"] {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .color-options.expert-options {

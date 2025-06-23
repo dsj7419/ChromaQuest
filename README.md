@@ -44,7 +44,7 @@ That's it! 🎮
   - **Endless** - Play forever!
   - **Expert** - See a color, guess its RGB values!
 
-- **📈 5 Difficulty Levels:** From Easy (3 colors) to Master (16 colors!)
+- **📈 5 Difficulty Levels:** From Easy (3 colors) to Master (18 colors!)
 - **✨ Beautiful Animations:** Smooth gradients, particle effects, and transitions
 - **🔊 Sound Effects:** Satisfying audio feedback
 - **🌓 Dark/Light Mode:** Easy on the eyes

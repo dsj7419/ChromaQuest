@@ -200,7 +200,7 @@ class ChromaQuest {
             medium: 6,
             hard: 9,
             expert: 12,
-            master: 16
+            master: 18
         };
         return counts[this.difficulty];
     }
@@ -227,6 +227,9 @@ class ChromaQuest {
         const colorDisplay = document.getElementById('colorDisplay');
         const rgbValues = document.getElementById('rgbValues');
         const colorOptions = document.getElementById('colorOptions');
+
+        // Set data attribute for color count to help with CSS grid
+        colorOptions.dataset.count = this.options.length;
 
         if (this.gameMode === 'expert') {
             // Expert mode: Show the color, guess the RGB
