@@ -97,6 +97,12 @@ class ChromaQuest {
                 document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
                 this.gameMode = e.target.dataset.mode;
+                // Reset timer display based on mode
+                if (this.gameMode === 'endless') {
+                    document.getElementById('timer').textContent = '∞';
+                } else if (this.gameMode !== 'timed') {
+                    document.getElementById('timer').textContent = '30s';
+                }
                 this.startNewGame();
             });
         });
@@ -145,6 +151,8 @@ class ChromaQuest {
 
         if (this.gameMode === 'timed') {
             this.startTimer();
+        } else if (this.gameMode === 'endless') {
+            document.getElementById('timer').textContent = '∞';
         }
 
         this.generateNewRound();
@@ -220,23 +228,40 @@ class ChromaQuest {
         const rgbValues = document.getElementById('rgbValues');
         const colorOptions = document.getElementById('colorOptions');
 
-        colorDisplay.style.background = `rgb(${this.targetColor.r}, ${this.targetColor.g}, ${this.targetColor.b})`;
-        
         if (this.gameMode === 'expert') {
-            rgbValues.textContent = 'RGB(?, ?, ?)';
+            // Expert mode: Show the color, guess the RGB
+            colorDisplay.style.background = `rgb(${this.targetColor.r}, ${this.targetColor.g}, ${this.targetColor.b})`;
+            rgbValues.textContent = 'Guess the RGB values!';
+            colorDisplay.classList.add('expert-mode');
+            
+            // Show RGB values as options instead of colors
+            colorOptions.innerHTML = '';
+            colorOptions.classList.add('expert-options');
+            this.options.forEach((color, index) => {
+                const option = document.createElement('div');
+                option.className = 'color-option rgb-option';
+                option.innerHTML = `<span class="rgb-text">RGB(${color.r}, ${color.g}, ${color.b})</span>`;
+                option.dataset.index = index;
+                option.addEventListener('click', (e) => this.checkAnswer(e.currentTarget, color));
+                colorOptions.appendChild(option);
+            });
         } else {
+            // Normal modes: Show RGB, guess the color
+            colorDisplay.style.background = '';
+            colorDisplay.classList.remove('expert-mode');
+            colorOptions.classList.remove('expert-options');
             rgbValues.textContent = `RGB(${this.targetColor.r}, ${this.targetColor.g}, ${this.targetColor.b})`;
+            
+            colorOptions.innerHTML = '';
+            this.options.forEach((color, index) => {
+                const option = document.createElement('div');
+                option.className = 'color-option';
+                option.style.background = `rgb(${color.r}, ${color.g}, ${color.b})`;
+                option.dataset.index = index;
+                option.addEventListener('click', (e) => this.checkAnswer(e.currentTarget, color));
+                colorOptions.appendChild(option);
+            });
         }
-
-        colorOptions.innerHTML = '';
-        this.options.forEach((color, index) => {
-            const option = document.createElement('div');
-            option.className = 'color-option';
-            option.style.background = `rgb(${color.r}, ${color.g}, ${color.b})`;
-            option.dataset.index = index;
-            option.addEventListener('click', (e) => this.checkAnswer(e.target, color));
-            colorOptions.appendChild(option);
-        });
     }
 
     checkAnswer(element, selectedColor) {
@@ -302,13 +327,18 @@ class ChromaQuest {
         this.score = Math.max(0, this.score - 50);
         this.updateScore();
         
-        const hex = this.rgbToHex(this.targetColor);
-        document.getElementById('hexHint').textContent = hex;
-        document.getElementById('hexHint').classList.add('show');
+        // Find and shake the correct answer
+        const correctIndex = this.options.findIndex(color => 
+            this.colorsMatch(color, this.targetColor)
+        );
         
-        setTimeout(() => {
-            document.getElementById('hexHint').classList.remove('show');
-        }, 3000);
+        const correctOption = document.querySelector(`.color-option[data-index="${correctIndex}"]`);
+        if (correctOption) {
+            correctOption.classList.add('hint-shake');
+            setTimeout(() => {
+                correctOption.classList.remove('hint-shake');
+            }, 1000);
+        }
     }
 
     rgbToHex(color) {

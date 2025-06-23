@@ -223,7 +223,9 @@ body.light-mode {
 .color-display {
     width: 100%;
     height: 200px;
-    background: var(--primary-gradient);
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
     border-radius: 30px;
     margin-bottom: 40px;
     display: flex;
@@ -232,7 +234,6 @@ body.light-mode {
     justify-content: center;
     box-shadow: 0 20px 60px var(--shadow-color);
     transition: var(--transition);
-    animation: pulse 2s ease-in-out infinite;
     position: relative;
     overflow: hidden;
 }
@@ -248,6 +249,24 @@ body.light-mode {
     animation: rotate 10s linear infinite;
 }
 
+.color-display.mystery-mode {
+    background: linear-gradient(-45deg, #4a4a4a, #6a6a6a, #8a8a8a, #5a5a5a);
+    background-size: 400% 400%;
+    animation: gradientShift 10s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 @keyframes rotate {
     from {
         transform: rotate(0deg);
@@ -257,14 +276,6 @@ body.light-mode {
     }
 }
 
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.02);
-    }
-}
 
 .rgb-values {
     font-size: 2rem;
@@ -274,18 +285,6 @@ body.light-mode {
     z-index: 1;
 }
 
-.hex-hint {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-top: 10px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: 1;
-}
-
-.hex-hint.show {
-    opacity: 1;
-}
 
 .game-modes {
     display: flex;
@@ -330,6 +329,10 @@ body.light-mode {
     margin-bottom: 40px;
 }
 
+.color-options.expert-options {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
 .color-option {
     height: 120px;
     border-radius: 20px;
@@ -371,6 +374,30 @@ body.light-mode {
     animation: wrongAnimation 0.6s ease-out;
 }
 
+.color-option.hint-shake {
+    animation: hintShake 0.5s ease-in-out;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 15px 40px var(--shadow-color);
+}
+
+.color-option.rgb-option {
+    background: var(--card-dark);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.light-mode .color-option.rgb-option {
+    background: var(--card-light);
+}
+
+.rgb-text {
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
 @keyframes correctAnimation {
     0% {
         transform: scale(1);
@@ -392,6 +419,18 @@ body.light-mode {
     }
     75% {
         transform: translateX(10px);
+    }
+}
+
+@keyframes hintShake {
+    0%, 100% {
+        transform: translateX(0) scale(1);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px) scale(1.05);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px) scale(1.05);
     }
 }
 
@@ -454,8 +493,18 @@ body.light-mode {
     transition: var(--transition);
 }
 
+.difficulty-select option {
+    background: var(--bg-dark);
+    color: var(--text-dark);
+}
+
 .light-mode .difficulty-select {
     background: var(--card-light);
+    color: var(--text-light);
+}
+
+.light-mode .difficulty-select option {
+    background: var(--bg-light);
     color: var(--text-light);
 }
 
