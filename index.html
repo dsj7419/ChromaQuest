@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChromaQuest - Master the Art of Color</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="theme-toggle" id="themeToggle">
+        <span class="theme-icon">🌙</span>
+    </div>
+
+    <header class="header">
+        <h1 class="game-title">
+            <span class="title-gradient">ChromaQuest</span>
+            <span class="subtitle">Master the Art of Color</span>
+        </h1>
+    </header>
+
+    <main class="game-container">
+        <div class="game-info">
+            <div class="info-card score-card">
+                <h3>Score</h3>
+                <p class="score" id="score">0</p>
+            </div>
+            <div class="info-card streak-card">
+                <h3>Streak</h3>
+                <p class="streak" id="streak">0</p>
+            </div>
+            <div class="info-card best-card">
+                <h3>Best</h3>
+                <p class="best" id="best">0</p>
+            </div>
+            <div class="info-card timer-card">
+                <h3>Time</h3>
+                <p class="timer" id="timer">30s</p>
+            </div>
+        </div>
+
+        <div class="color-display" id="colorDisplay">
+            <div class="rgb-values" id="rgbValues">RGB(?, ?, ?)</div>
+            <div class="hex-hint" id="hexHint"></div>
+        </div>
+
+        <div class="game-modes">
+            <button class="mode-btn active" data-mode="classic">Classic</button>
+            <button class="mode-btn" data-mode="timed">Timed Rush</button>
+            <button class="mode-btn" data-mode="endless">Endless</button>
+            <button class="mode-btn" data-mode="expert">Expert</button>
+        </div>
+
+        <div class="color-options" id="colorOptions"></div>
+
+        <div class="game-controls">
+            <button class="control-btn new-game-btn" id="newGameBtn">
+                <span class="btn-icon">🎮</span> New Game
+            </button>
+            <button class="control-btn hint-btn" id="hintBtn">
+                <span class="btn-icon">💡</span> Hint (-50pts)
+            </button>
+            <button class="control-btn sound-btn" id="soundBtn">
+                <span class="btn-icon">🔊</span> Sound
+            </button>
+        </div>
+
+        <div class="difficulty-selector">
+            <label for="difficulty">Difficulty:</label>
+            <select id="difficulty" class="difficulty-select">
+                <option value="easy">Easy (3 colors)</option>
+                <option value="medium" selected>Medium (6 colors)</option>
+                <option value="hard">Hard (9 colors)</option>
+                <option value="expert">Expert (12 colors)</option>
+                <option value="master">Master (16 colors)</option>
+            </select>
+        </div>
+    </main>
+
+    <div class="modal" id="gameOverModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Game Over!</h2>
+            <div class="modal-stats">
+                <p>Final Score: <span id="finalScore">0</span></p>
+                <p>Best Streak: <span id="finalStreak">0</span></p>
+                <p>Accuracy: <span id="accuracy">0%</span></p>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn play-again">Play Again</button>
+                <button class="modal-btn share-btn">Share Score</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="achievement-popup" id="achievementPopup">
+        <div class="achievement-content">
+            <span class="achievement-icon">🏆</span>
+            <p class="achievement-text"></p>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
